@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/bottom_navigation_page.dart';
+import 'package:flutter_app/product/view/main_product_page.dart';
 import 'package:flutter_app/provider/login_page_provider.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -22,7 +23,7 @@ class _SplashPageState extends State<SplashPage> {
       () {
         var token = box.read("token");
         if (token != null) {
-          Get.to(BottomNavigationPage());
+          Get.to(MainProductPage());
         } else {
           Get.to(LoginPageProvider());
         }

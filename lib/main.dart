@@ -5,6 +5,7 @@ import 'package:flutter_app/bottom_navigation_page.dart';
 import 'package:flutter_app/get/login_page_get.dart';
 import 'package:flutter_app/login_page.dart';
 import 'package:flutter_app/navigation_drawer_page.dart';
+import 'package:flutter_app/product/controller/form_product_controller.dart';
 import 'package:flutter_app/provider/login_controller_provider.dart';
 import 'package:flutter_app/provider/login_page_provider.dart';
 import 'package:flutter_app/splash_page.dart';
@@ -25,8 +26,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => LoginControllerProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => LoginControllerProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FormProductController(),
+        ),
+      ],
       child: GetMaterialApp(
         home: SplashPage(),
       ),

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_app/app/config.dart';
 import 'package:flutter_app/data/model/login_response.dart';
 import 'package:flutter_app/data/model/register_response.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,7 +9,7 @@ class AuthRepository {
     Dio dio = Dio();
     try {
       var result =
-          await dio.post("http://10.0.2.2:8000/api/login", data: request);
+          await dio.post("$url/login", data: request);
       return LoginResponse.fromJson(result.data);
     } on DioException catch (e) {
       if (e.response!.statusCode == 422) {
@@ -24,7 +25,7 @@ class AuthRepository {
     Dio dio = Dio();
     try {
       var result =
-          await dio.post("http://10.0.2.2:8000/api/register", data: request);
+          await dio.post("$url/register", data: request);
       return RegisterResponse.fromJson(result.data);
     } on DioException catch (e) {
       if (e.response!.statusCode == 422) {
@@ -41,7 +42,7 @@ class AuthRepository {
     Dio dio = Dio();
     try {
       dio.options = BaseOptions(headers: {"Authorization": "Bearer $token"});
-      await dio.post("http://10.0.2.2:8000/api/logout");
+      await dio.post("$url/logout");
       return true;
     } on DioException catch (e) {
       if (e.response!.statusCode == 422) {

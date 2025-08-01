@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/repository/auth_repository.dart';
+import 'package:flutter_app/product/view/main_product_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -54,7 +55,7 @@ class LoginControllerProvider extends ChangeNotifier {
       try {
         var result = await _authRepository.loginFunction(request);
         box.write("token", result.token);
-        Get.to(BottomNavigationPage());
+        Get.to(MainProductPage());
       } catch (e) {
         Get.snackbar("Error", "Message: ${e.toString()}",
             backgroundColor: Colors.red, snackPosition: SnackPosition.BOTTOM);
