@@ -46,7 +46,8 @@ class ProductRepository {
     var token = box.read("token");
     try {
       dio.options = BaseOptions(headers: {"Authorization": "Bearer $token"});
-      var result = await dio.post("$url/products", data: FormData.fromMap(request));
+      var result =
+          await dio.post("$url/products", data: FormData.fromMap(request));
       return InsertProductResponse.fromJson(result.data);
     } on DioException catch (e) {
       if (e.response!.statusCode == 422) {
@@ -57,7 +58,21 @@ class ProductRepository {
     }
   }
 
-  void updateProduct() {}
+  Future<bool> updateProduct(int id, Map<String, dynamic> request) async {
+    final box = GetStorage();
+    var token = box.read("token");
+    try {
+      dio.options = BaseOptions(headers: {"Authorization": "Bearer $token"});
+      await dio.post("$url/products/$id", data: FormData.fromMap(request));
+      return true;
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 422) {
+        throw Exception(e.response!.data);
+      } else {
+        throw Exception(e.response!.statusMessage);
+      }
+    }
+  }
 
   Future<bool> deleteProduct(int id) async {
     final box = GetStorage();

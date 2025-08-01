@@ -13,6 +13,22 @@ class FormProductController extends ChangeNotifier {
   TextEditingController stockField = TextEditingController();
   File imageFile = File("");
 
+  Future detailProduct(int id) async {
+    var result = await ProductRepository().fetchDetailProduct(id);
+    if (id != 0) {
+      nameField.text = result.data!.title!;
+      descriptionField.text = result.data!.description!;
+      priceField.text = result.data!.price.toString();
+      stockField.text = result.data!.price.toString();
+    } else {
+      nameField.clear();
+      descriptionField.clear();
+      priceField.clear();
+      stockField.clear();
+      imageFile = File("");
+    }
+  }
+
   void openPickImage(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -59,7 +75,7 @@ class FormProductController extends ChangeNotifier {
   void captureCamera(BuildContext context) async {
     var result = await ImagePicker().pickImage(source: ImageSource.camera);
     imageFile = File(result!.path);
-  Navigator.pop(context);
+    Navigator.pop(context);
     notifyListeners();
   }
 
@@ -84,7 +100,24 @@ class FormProductController extends ChangeNotifier {
       Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Error Insert")));
+          .showSnackBar(SnackBar(content: Text("Failed Submit")));
+    }
+  }
+
+  void actionSubmitUpdate(BuildContext context, int id) async {
+    var request = {
+      "_method": "PUT",
+      "title": nameField.text,
+      "description": descriptionField.text,
+      "price": priceField.text,
+      "stock": stockField.text,
+    };
+    try {
+      await ProductRepository().updateProduct(id, request);
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Failed Submit")));
     }
   }
 }

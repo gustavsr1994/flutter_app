@@ -36,10 +36,10 @@ class _MainProductPageState extends State<MainProductPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => Get.to(FormProductPage()),
+          onPressed: () => Get.to(FormProductPage(0)),
           child: Icon(Icons.add),
         ),
-        body: StreamBuilder(
+        body: StreamBuilder<List<DataProduct>>(
           stream: getAllProduct(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -66,7 +66,7 @@ class _MainProductPageState extends State<MainProductPage> {
                                       color: Colors.blue,
                                     )),
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => Get.to(FormProductPage(item.id!)),
                                     icon: Icon(
                                       Icons.edit,
                                       color: Colors.green,
