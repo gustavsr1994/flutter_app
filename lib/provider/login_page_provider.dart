@@ -107,7 +107,7 @@ class _LoginPageProviderState extends State<LoginPageProvider> {
                   ),
                 ),
                 ElevatedButton(
-                    onPressed: () => controller.actionSubmitLogin(),
+                    onPressed: () => controller.actionLoginFirebase(),
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.green),
                     child: Text(
@@ -115,7 +115,7 @@ class _LoginPageProviderState extends State<LoginPageProvider> {
                       style: TextStyle(color: Colors.yellow),
                     )),
                 ElevatedButton(
-                    onPressed: () => controller.actionSubmitRegister(),
+                    onPressed: () => controller.actionRegisterFirebase(),
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                     child: Text(

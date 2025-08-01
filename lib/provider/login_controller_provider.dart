@@ -48,10 +48,7 @@ class LoginControllerProvider extends ChangeNotifier {
   void actionSubmitLogin() async {
     final box = GetStorage();
     if (formKey.currentState!.validate()) {
-      var request = {
-        "email": emailField.text,
-        "password": passwordField.text
-      };
+      var request = {"email": emailField.text, "password": passwordField.text};
       try {
         var result = await _authRepository.loginFunction(request);
         box.write("token", result.token);
@@ -62,6 +59,29 @@ class LoginControllerProvider extends ChangeNotifier {
       }
     } else {
       Get.snackbar("Data Kosong", "Periksa Data",
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  void actionRegisterFirebase() async {
+    try {
+      await _authRepository.createUserFirebase(
+          emailField.text, passwordField.text);
+    } catch (e) {
+      Get.snackbar("Failed Register", "Periksa Data",
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  void actionLoginFirebase() async {
+    try {
+      var result = await _authRepository.signInFirebase(
+          emailField.text, passwordField.text);
+
+      Get.snackbar("Succes Login", "Welcome to $result",
+          snackPosition: SnackPosition.BOTTOM);
+    } catch (e) {
+      Get.snackbar("Failed Login", "Periksa Data",
           snackPosition: SnackPosition.BOTTOM);
     }
   }
