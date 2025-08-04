@@ -3,22 +3,44 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class FormNewEmployeePage extends StatefulWidget {
-  const FormNewEmployeePage({super.key});
+  final String documentId;
+  const FormNewEmployeePage(this.documentId, {super.key});
 
   @override
   State<FormNewEmployeePage> createState() => _FormNewEmployeePageState();
 }
 
 class _FormNewEmployeePageState extends State<FormNewEmployeePage> {
+  CollectionReference _itemCollection =
+      FirebaseFirestore.instance.collection("employees");
   TextEditingController firstNameField = TextEditingController();
   TextEditingController lastNameField = TextEditingController();
   TextEditingController birthDate = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.documentId != "") {
+      fetchDetailEmployee();
+    }
+  }
+
+  void fetchDetailEmployee() async {
+    var result = await _itemCollection.doc(widget.documentId).get();
+    var item = result.data() as Map<String, dynamic>;
+    firstNameField.text = item['first_name'];
+    lastNameField.text = item['last_name'];
+    birthDate.text =
+        DateFormat("dd MMMM yyyy").format(item['birthdate'].toDate());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Form New Employee"),
+        title: Text(widget.documentId == ""
+            ? "Form Update Employee"
+            : "Form New Employee"),
       ),
       body: ListView(
         children: [
@@ -86,14 +108,20 @@ class _FormNewEmployeePageState extends State<FormNewEmployeePage> {
   }
 
   void actionSubmit() async {
-    CollectionReference _itemCollection =
-        FirebaseFirestore.instance.collection("employees");
     try {
-      await _itemCollection.add({
-        'first_name': firstNameField.text,
-        'last_name': lastNameField.text,
-        'birthdate': DateFormat("dd MMMM yyyy").parse(birthDate.text)
-      });
+      if (widget.documentId == "") {
+        await _itemCollection.add({
+          'first_name': firstNameField.text,
+          'last_name': lastNameField.text,
+          'birthdate': DateFormat("dd MMMM yyyy").parse(birthDate.text)
+        });
+      } else {
+        await _itemCollection.doc(widget.documentId).update({
+          'first_name': firstNameField.text,
+          'last_name': lastNameField.text,
+          'birthdate': DateFormat("dd MMMM yyyy").parse(birthDate.text)
+        });
+      }
       Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context)

@@ -23,7 +23,7 @@ class _HomeListEmployeePageState extends State<HomeListEmployeePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(FormNewEmployeePage());
+          Get.to(FormNewEmployeePage(""));
         },
         child: Icon(Icons.add),
       ),
@@ -52,7 +52,7 @@ class _HomeListEmployeePageState extends State<HomeListEmployeePage> {
                                     color: Colors.red,
                                   )),
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () => Get.to(FormNewEmployeePage(documentId)),
                                   icon: Icon(
                                     Icons.edit,
                                     color: Colors.green,
