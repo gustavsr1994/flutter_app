@@ -68,7 +68,7 @@ class LoginControllerProvider extends ChangeNotifier {
       await _authRepository.createUserFirebase(
           emailField.text, passwordField.text);
     } catch (e) {
-      Get.snackbar("Failed Register", "Periksa Data",
+      Get.snackbar("Failed Register", "Error: ${e.toString()}",
           snackPosition: SnackPosition.BOTTOM);
     }
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/bloc/login_controller_bloc.dart';
 import 'package:flutter_app/bloc/login_page_bloc.dart';
 import 'package:flutter_app/bottom_navigation_page.dart';
+import 'package:flutter_app/employee/home_list_employee_page.dart';
 import 'package:flutter_app/get/login_page_get.dart';
 import 'package:flutter_app/login_page.dart';
 import 'package:flutter_app/navigation_drawer_page.dart';
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: GetMaterialApp(
-        home: SplashPage(),
+        home: HomeListEmployeePage()
+        //SplashPage(),
       ),
     );
   }
