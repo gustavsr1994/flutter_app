@@ -6,6 +6,8 @@ import 'package:flutter_app/bottom_navigation_page.dart';
 import 'package:flutter_app/employee/home_list_employee_page.dart';
 import 'package:flutter_app/get/login_page_get.dart';
 import 'package:flutter_app/login_page.dart';
+import 'package:flutter_app/maps_controller.dart';
+import 'package:flutter_app/maps_page.dart';
 import 'package:flutter_app/navigation_drawer_page.dart';
 import 'package:flutter_app/product/controller/form_product_controller.dart';
 import 'package:flutter_app/provider/login_controller_provider.dart';
@@ -41,11 +43,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => FormProductController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => MapsController(),
+        )
       ],
-      child: GetMaterialApp(
-        home: HomeListEmployeePage()
-        //SplashPage(),
-      ),
+      child: GetMaterialApp(home: MapsPage()
+          //HomeListEmployeePage()
+          //SplashPage(),
+          ),
     );
   }
 }
