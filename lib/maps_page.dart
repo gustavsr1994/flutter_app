@@ -15,14 +15,12 @@ class MapsPage extends StatefulWidget {
 }
 
 class _MapsPageState extends State<MapsPage> {
-  ConfigNotification _notification = ConfigNotification();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     context.read<MapsController>().fetchCurrentPosition();
-    _notification.showNotification();
   }
 
   @override
