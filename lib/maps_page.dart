@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/config/config_notification.dart';
 import 'package:flutter_app/maps_controller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,11 +15,14 @@ class MapsPage extends StatefulWidget {
 }
 
 class _MapsPageState extends State<MapsPage> {
+  ConfigNotification _notification = ConfigNotification();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     context.read<MapsController>().fetchCurrentPosition();
+    _notification.showNotification();
   }
 
   @override

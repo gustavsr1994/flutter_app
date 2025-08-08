@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/bloc/login_controller_bloc.dart';
 import 'package:flutter_app/bloc/login_page_bloc.dart';
 import 'package:flutter_app/bottom_navigation_page.dart';
+import 'package:flutter_app/config/config_notification.dart';
 import 'package:flutter_app/employee/home_list_employee_page.dart';
 import 'package:flutter_app/get/login_page_get.dart';
 import 'package:flutter_app/login_page.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_app/splash_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -26,7 +28,20 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  askPermissionNotification();
   runApp(const MyApp());
+}
+
+void askPermissionNotification() async {
+  PermissionStatus permissionNotif = await Permission.notification.status;
+  if (permissionNotif.isGranted) {
+    ConfigNotification().initialNotification();
+  } else {
+    permissionNotif = await Permission.notification.request();
+    if (permissionNotif.isGranted) {
+      ConfigNotification().initialNotification();
+    }
+  }
 }
 
 class MyApp extends StatelessWidget {
